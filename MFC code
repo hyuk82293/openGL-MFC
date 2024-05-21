@@ -21,19 +21,19 @@
 IMPLEMENT_DYNCREATE(CMFCApplication1View, CView)
 
 BEGIN_MESSAGE_MAP(CMFCApplication1View, CView)
-    // 표준 인쇄 명령입니다.
-    ON_COMMAND(ID_FILE_PRINT, &CView::OnFilePrint)
-    ON_COMMAND(ID_FILE_PRINT_DIRECT, &CView::OnFilePrint)
-    ON_COMMAND(ID_FILE_PRINT_PREVIEW, &CView::OnFilePrintPreview)
-    ON_WM_MOUSEMOVE()
+	// 표준 인쇄 명령입니다.
+	ON_COMMAND(ID_FILE_PRINT, &CView::OnFilePrint)
+	ON_COMMAND(ID_FILE_PRINT_DIRECT, &CView::OnFilePrint)
+	ON_COMMAND(ID_FILE_PRINT_PREVIEW, &CView::OnFilePrintPreview)
+	ON_WM_MOUSEMOVE()
 END_MESSAGE_MAP()
 
 // CMFCApplication1View 생성/소멸
 
 CMFCApplication1View::CMFCApplication1View() noexcept
 {
-    // TODO: 여기에 생성 코드를 추가합니다.
-    pnt = CPoint(0, 0); // 초기 마우스 위치를 (0, 0)으로 설정
+	// TODO: 여기에 생성 코드를 추가합니다.
+	pnt = CPoint(0, 0); // 초기 마우스 위치를 (0, 0)으로 설정
 }
 
 CMFCApplication1View::~CMFCApplication1View()
@@ -42,49 +42,60 @@ CMFCApplication1View::~CMFCApplication1View()
 
 BOOL CMFCApplication1View::PreCreateWindow(CREATESTRUCT& cs)
 {
-    // TODO: CREATESTRUCT cs를 수정하여 여기에서
-    //  Window 클래스 또는 스타일을 수정합니다.
+	// TODO: CREATESTRUCT cs를 수정하여 여기에서
+	//  Window 클래스 또는 스타일을 수정합니다.
 
-    return CView::PreCreateWindow(cs);
+	return CView::PreCreateWindow(cs);
 }
 
 // CMFCApplication1View 그리기
 
 void CMFCApplication1View::OnDraw(CDC* pDC)
 {
-    CMFCApplication1Doc* pDoc = GetDocument();
-    ASSERT_VALID(pDoc);
-    if (!pDoc)
-        return;
+	CMFCApplication1Doc* pDoc = GetDocument();
+	ASSERT_VALID(pDoc);
+	if (!pDoc)
+		return;
 
-    // TODO: 여기에 원시 데이터에 대한 그리기 코드를 추가합니다.
+	// TODO: 여기에 원시 데이터에 대한 그리기 코드를 추가합니다.
 
-    // 사각형 그리기
-    pDC->Rectangle(pnt.x - 150, pnt.y - 150, pnt.x + 150, pnt.y + 150);
+	// 사각형 그리기
+	pDC->Rectangle(pnt.x - 150, pnt.y - 150, pnt.x + 150, pnt.y + 150);
 
-    // 타원 그리기
-    pDC->Ellipse(pnt.x - 150, pnt.y - 150, pnt.x + 150, pnt.y + 150);
+	// 타원 그리기
+	pDC->Ellipse(pnt.x - 150, pnt.y - 150, pnt.x + 150, pnt.y + 150);
 
-    // 글씨 쓰기
-    pDC->TextOutW(pnt.x - 30, pnt.y - 30, L"Hello ANU");
+	// 글씨 쓰기
+	pDC->TextOutW(pnt.x - 30, pnt.y-30, L"Hello ANU");
+
+	// 선 그리기
+	pDC->MoveTo(pnt.x - 150, pnt.y + 200);
+	pDC->LineTo(pnt.x + 150, pnt.y + 200);
+
+	// 폴리곤 그리기
+	POINT points[] = { {pnt.x, pnt.y + 250}, {pnt.x + 50, pnt.y + 300}, {pnt.x, pnt.y + 350}, {pnt.x - 50, pnt.y + 300} };
+	pDC->Polygon(points, 4);
+
+	// 호 그리기
+	pDC->Arc(pnt.x - 150, pnt.y + 400, pnt.x + 150, pnt.y + 600, pnt.x - 150, pnt.y + 500, pnt.x, pnt.y);
 }
 
 // CMFCApplication1View 인쇄
 
 BOOL CMFCApplication1View::OnPreparePrinting(CPrintInfo* pInfo)
 {
-    // 기본적인 준비
-    return DoPreparePrinting(pInfo);
+	// 기본적인 준비
+	return DoPreparePrinting(pInfo);
 }
 
 void CMFCApplication1View::OnBeginPrinting(CDC* /*pDC*/, CPrintInfo* /*pInfo*/)
 {
-    // TODO: 인쇄하기 전에 추가 초기화 작업을 추가합니다.
+	// TODO: 인쇄하기 전에 추가 초기화 작업을 추가합니다.
 }
 
 void CMFCApplication1View::OnEndPrinting(CDC* /*pDC*/, CPrintInfo* /*pInfo*/)
 {
-    // TODO: 인쇄 후 정리 작업을 추가합니다.
+	// TODO: 인쇄 후 정리 작업을 추가합니다.
 }
 
 // CMFCApplication1View 진단
@@ -92,18 +103,18 @@ void CMFCApplication1View::OnEndPrinting(CDC* /*pDC*/, CPrintInfo* /*pInfo*/)
 #ifdef _DEBUG
 void CMFCApplication1View::AssertValid() const
 {
-    CView::AssertValid();
+	CView::AssertValid();
 }
 
 void CMFCApplication1View::Dump(CDumpContext& dc) const
 {
-    CView::Dump(dc);
+	CView::Dump(dc);
 }
 
 CMFCApplication1Doc* CMFCApplication1View::GetDocument() const // 디버그되지 않은 버전은 인라인으로 지정됩니다.
 {
-    ASSERT(m_pDocument->IsKindOf(RUNTIME_CLASS(CMFCApplication1Doc)));
-    return (CMFCApplication1Doc*)m_pDocument;
+	ASSERT(m_pDocument->IsKindOf(RUNTIME_CLASS(CMFCApplication1Doc)));
+	return (CMFCApplication1Doc*)m_pDocument;
 }
 #endif //_DEBUG
 
@@ -111,9 +122,9 @@ CMFCApplication1Doc* CMFCApplication1View::GetDocument() const // 디버그되�
 
 void CMFCApplication1View::OnMouseMove(UINT nFlags, CPoint point)
 {
-    // TODO: 여기에 메시지 처리기 코드를 추가 및/또는 기본값을 호출합니다.
-    pnt = point;
-    Invalidate(); // 뷰를 무효화하여 WM_PAINT 메시지를 발생시켜 OnDraw를 호출하게 함
+	// TODO: 여기에 메시지 처리기 코드를 추가 및/또는 기본값을 호출합니다.
+	pnt = point;
+	Invalidate(); // 뷰를 무효화하여 WM_PAINT 메시지를 발생시켜 OnDraw를 호출하게 함
 
-    CView::OnMouseMove(nFlags, point);
+	CView::OnMouseMove(nFlags, point);
 }
